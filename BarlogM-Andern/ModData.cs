@@ -14,11 +14,9 @@ public class ModData
     public readonly ModConfig ModConfig;
     public readonly string PathToMod;
 
-    static readonly FrozenSet<string> _excludedMaps =
-        ["develop", "hideout", "privatearea", "suburbs", "terminal", "town"];
+    private static readonly FrozenSet<string> EXCLUDED_MAPS = ["develop", "hideout", "privatearea", "suburbs", "terminal", "town"];
 
-    public static readonly FrozenSet<string> AllMaps =
-    [
+    public static readonly FrozenSet<string> ALL_MAPS = [
         "bigmap",
         "factory4_day",
         "factory4_night",
@@ -34,7 +32,7 @@ public class ModData
         "sandbox_high"
     ];
 
-    public static readonly MongoId LegaMedalId = new("6656560053eaaa7a23349c86");
+    public static readonly MongoId LEGA_MEDAL_ID = new("6656560053eaaa7a23349c86");
 
     public ModData(ISptLogger<ModData> logger, ModHelper modHelper)
     {
@@ -47,6 +45,6 @@ public class ModData
 
     public bool IsMapExclueded(string mapName)
     {
-        return _excludedMaps.Contains(mapName.ToLower());
+        return EXCLUDED_MAPS.Contains(mapName.ToLower());
     }
 }

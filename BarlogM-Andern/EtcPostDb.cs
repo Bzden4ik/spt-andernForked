@@ -24,6 +24,7 @@ public class EtcPostDb(
 {
     private readonly ModConfig _modConfig = modData.ModConfig;
     private readonly RagfairConfig _ragfairConfig = configServer.GetConfig<RagfairConfig>();
+    private readonly ScavCaseConfig _scavCaseConfig = configServer.GetConfig<ScavCaseConfig>();
 
     public Task OnLoad()
     {
@@ -37,16 +38,35 @@ public class EtcPostDb(
             RemoveAllTradersItemsFromFlea();
         }
 
+        if (_modConfig.ScavCaseLootValueMultiplier != 0)
+        {
+            ScavCaseLootValueMultiplier();
+        }
+
+        FixCirculateQuest();
+        
         return Task.CompletedTask;
     }
+    
+    void ScavCaseLootValueMultiplier()
+    {
+        _scavCaseConfig.AllowBossItemsAsRewards = true;
 
-    private void FleaBlacklistDisable()
+        foreach (var valueRange in _scavCaseConfig.RewardItemValueRangeRub.Keys) {
+            _scavCaseConfig.RewardItemValueRangeRub[valueRange].Min *=
+                _modConfig.ScavCaseLootValueMultiplier;
+            _scavCaseConfig.RewardItemValueRangeRub[valueRange].Max *=
+                _modConfig.ScavCaseLootValueMultiplier;
+        }
+    }
+
+    void FleaBlacklistDisable()
     {
         _ragfairConfig.Dynamic.Blacklist.EnableBsgList = false;
         _ragfairConfig.Dynamic.Blacklist.TraderItems = true;
     }
 
-    private void RemoveAllTradersItemsFromFlea()
+    void RemoveAllTradersItemsFromFlea()
     {
         FrozenSet<MongoId> ignoreBaseClasses = [
             BaseClasses.FOOD,
@@ -99,5 +119,22 @@ public class EtcPostDb(
         ];
 
         ragfair.Dynamic.Blacklist.Custom.UnionWith(items);
+    }
+
+    void FixCirculateQuest()
+    {
+        var conditionsAvailableForFinish = databaseService.GetTemplates()
+            .Quests["6663149f1d3ec95634095e75"]
+            .Conditions.AvailableForFinish;
+        
+        if (conditionsAvailableForFinish == null) return;
+        
+        var condition = conditionsAvailableForFinish
+            .FirstOrDefault(c => c.ConditionType == "SellItemToTrader");
+
+        if (condition != null)
+        {
+            condition.Target!.List!.Add("67458730df3c1da90b0b052b");
+        }
     }
 }

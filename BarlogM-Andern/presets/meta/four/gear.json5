@@ -19,57 +19,57 @@
     helmets: [
         {
             // Ops-Core FAST MT Super High Cut helmet (Tan)
-            weight: 2,
+            weight: 3,
             id: "5ac8d6885acfc400180ae7b0",
         },
         {
             // Ops-Core FAST MT Super High Cut helmet (Black)
-            weight: 2,
+            weight: 3,
             id: "5a154d5cfcdbcb001a3b00da",
         },
         {
             // Crye Precision AirFrame helmet (Tan)
-            weight: 2,
+            weight: 3,
             id: "5c17a7ed2e2216152142459c",
         },
         {
             // Team Wendy EXFIL Ballistic Helmet (Black)
-            weight: 2,
+            weight: 3,
             id: "5e00c1ad86f774747333222c",
         },
         {
             // Team Wendy EXFIL Ballistic Helmet (Coyote Brown)
-            weight: 2,
+            weight: 3,
             id: "5e01ef6886f77445f643baa4",
         },
         {
             // HighCom Striker ULACH IIIA helmet (Black)
-            weight: 2,
+            weight: 3,
             id: "5b40e1525acfc4771e1c6611",
         },
         {
             // HighCom Striker ULACH IIIA helmet (Desert Tan)
-            weight: 2,
+            weight: 3,
             id: "5b40e2bc5acfc40016388216",
         },
         {
             // Ballistic Armor Co. Bastion helmet (Armor Black)
-            weight: 2,
+            weight: 3,
             id: "66b5f65ca7f72d197e70bcd6",
         },
         {
             // Ballistic Armor Co. Bastion helmet (OD Green)
-            weight: 2,
+            weight: 3,
             id: "66b5f661af44ca0014063c05",
         },
         {
             // Ballistic Armor Co. Bastion helmet (MultiCam)
-            weight: 2,
+            weight: 3,
             id: "66b5f666cad6f002ab7214c2",
         },
         {
             // MTEK FLUX Ballistic helmet (Olive Drab)
-            weight: 2,
+            weight: 3,
             id: "6759655674aa5e0825040d62",
         },
         {

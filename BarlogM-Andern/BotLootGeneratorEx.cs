@@ -46,14 +46,13 @@ public class BotLootGeneratorEx(
     cloner
 )
 {
-    private static readonly Dictionary<MongoId, double> GpDict = new()
+    private static readonly Dictionary<MongoId, double> GP_DICT = new()
         { [Money.GP] = 1 };
 
-    private static readonly Dictionary<MongoId, double> LegaDict = new()
-        { [ModData.LegaMedalId] = 1 };
+    private static readonly Dictionary<MongoId, double> LEGA_DICT = new()
+        { [ModData.LEGA_MEDAL_ID] = 1 };
 
-    private static readonly FrozenSet<string> AllScavs =
-    [
+    private static readonly FrozenSet<string> ALL_SCAVS = [
         "arenafighter",
         "arenafighterevent",
         "assault",
@@ -131,7 +130,7 @@ public class BotLootGeneratorEx(
         if (_modConfig.GpCoinsOnPmcAndScavs)
         {
             if (botGenerationDetails.IsPmc ||
-                AllScavs.Contains(botGenerationDetails.Role.ToLower()))
+                ALL_SCAVS.Contains(botGenerationDetails.Role.ToLower()))
             {
                 AddGpCoins(botId, botGenerationDetails, botInventory);
             }
@@ -144,7 +143,7 @@ public class BotLootGeneratorEx(
     {
         AddLootFromPool(
             botId,
-            LegaDict,
+            LEGA_DICT,
             [EquipmentSlots.Pockets],
             1,
             botInventory,
@@ -161,7 +160,7 @@ public class BotLootGeneratorEx(
     {
         AddLootFromPool(
             botId,
-            GpDict,
+            GP_DICT,
             [EquipmentSlots.Pockets, EquipmentSlots.Backpack, EquipmentSlots.TacticalVest],
             1,
             botInventory,

@@ -177,5 +177,9 @@
     // AR-10 7.62x51 Lancer L7AWM 25-round magazine
     "65293c7a17e14363030ad308": [
         "6761770e48fa5c377e06fc3c"
+    ],
+    // AK-74M/AK-100 Zenit PT Lock
+    "5ac78eaf5acfc4001926317a": [
+        "6761779c48fa5c377e06fc3f" // AK AK-EVO stock
     ]
 }

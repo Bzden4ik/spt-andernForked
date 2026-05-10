@@ -21,7 +21,7 @@ public class WeaponGenerator(
     Data data
 )
 {
-    static readonly Dictionary<string, string> MuzzlePairs = new()
+    private static readonly Dictionary<string, string> MuzzlePairs = new()
     {
         ["6130c43c67085e45ef1405a1"] = "5dfa3d2b0dee1b22f862eade",
         ["618178aa1cb55961fa0fdc80"] = "5a34fe59c4a282000b1521a2",
@@ -53,28 +53,30 @@ public class WeaponGenerator(
         ["615d8f5dd92c473c770212ef"] = "615d8f8567085e45ef1409ca",
     };
 
-    static readonly string magazineSlotId = "mod_magazine";
+    const string MAGAZINE_SLOT_ID = "mod_magazine";
 
-    static readonly string MK47 = "606587252535c57a13424cfd";
-    static readonly string X_47_DRUM = "5cfe8010d7ad1a59283b14c6";
-    static readonly string MAGPUL_MOE_CARBINE_RUBBER_BUTTPAD = "58d2912286f7744e27117493";
-    static readonly string SIG_SAUER_TAPER_LOK_762X51_300_BLK_MUZZLE_ADAPTER = "5fbc22ccf24b94483f726483";
-    static readonly string SIG_SAUER_TWO_PORT_BRAKE_762X51_MUZZLE_BRAKE = "5fbcbd10ab884124df0cd563";
-    static readonly string SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR = "5fbe760793164a5b6278efc8";
-    static readonly string LANTAC_BMD_BLAST_MITIGATION_DEVICE_A3_DIRECT_THREAD_ADAPTER = "5cf78496d7f00c065703d6ca";
-    static readonly string AR_10_LANTAC_DRAGON_762X51_MUZZLE_BRAKE_COMPENSATOR = "5c878e9d2e2216000f201903";
-    static readonly string LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE = "5cf78720d7f00c06595bc93e";
-    static readonly string ZENIT_KLESCH_2IKS = "5a5f1ce64f39f90b401987bc";
-    static readonly string LEUPOLD_DELTAPOINT_REFLEX_SIGHT = "58d268fc86f774111273f8c2";
-    static readonly string DELTAPOINT_CROSS_SLOT_MOUNT_BASE = "58d2664f86f7747fec5834f6";
-    static readonly string AIMPOINT_MICRO_STANDARD_MOUNT = "58d39d3d86f77445bb794ae7";
-    static readonly string AIMPOINT_MICRO_SPACER_HIGH = "58d39b0386f77443380bf13c";
-    static readonly string AIMPOINT_MICRO_T_1_REFLEX_SIGHT = "58d399e486f77442e0016fe7";
-    static readonly int TACTICAL_DEVICE_LIGHT_AND_LASER_MODE = 1;
-    static readonly int TACTICAL_DEVICE_LASER_ONLY_MODE = 2;
+    const string MK47 = "606587252535c57a13424cfd";
+    const string X_47_DRUM = "5cfe8010d7ad1a59283b14c6";
+    const string MAGPUL_MOE_CARBINE_RUBBER_BUTTPAD = "58d2912286f7744e27117493";
+    const string SIG_SAUER_TAPER_LOK_762X51_300_BLK_MUZZLE_ADAPTER = "5fbc22ccf24b94483f726483";
+    const string SIG_SAUER_TWO_PORT_BRAKE_762X51_MUZZLE_BRAKE = "5fbcbd10ab884124df0cd563";
+    const string SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR = "5fbe760793164a5b6278efc8";
+    const string LANTAC_BMD_BLAST_MITIGATION_DEVICE_A3_DIRECT_THREAD_ADAPTER = "5cf78496d7f00c065703d6ca";
+    const string AR_10_LANTAC_DRAGON_762X51_MUZZLE_BRAKE_COMPENSATOR = "5c878e9d2e2216000f201903";
+    const string LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE = "5cf78720d7f00c06595bc93e";
+    const string ZENIT_KLESCH_2IKS = "5a5f1ce64f39f90b401987bc";
+    const string LEUPOLD_DELTAPOINT_REFLEX_SIGHT = "58d268fc86f774111273f8c2";
+    const string DELTAPOINT_CROSS_SLOT_MOUNT_BASE = "58d2664f86f7747fec5834f6";
+    const string AIMPOINT_MICRO_STANDARD_MOUNT = "58d39d3d86f77445bb794ae7";
+    const string AIMPOINT_MICRO_SPACER_HIGH = "58d39b0386f77443380bf13c";
+    const string AIMPOINT_MICRO_T_1_REFLEX_SIGHT = "58d399e486f77442e0016fe7";
+    const int TACTICAL_DEVICE_LIGHT_AND_LASER_MODE = 1;
+    const int TACTICAL_DEVICE_LASER_ONLY_MODE = 2;
+    const string AK_EVO_STOCK = "6761779c48fa5c377e06fc3f";
+    const string AK_ZENIT_PT_3_KLASSIKA_STOCK = "59ecc3dd86f7746dc827481c";
 
-    private readonly PmcConfig _pmcConfig = configServer.GetConfig<PmcConfig>();
-    private readonly RepairConfig _repairConfig = configServer.GetConfig<RepairConfig>();
+    readonly PmcConfig _pmcConfig = configServer.GetConfig<PmcConfig>();
+    readonly RepairConfig _repairConfig = configServer.GetConfig<RepairConfig>();
 
     string GetTemplateIdFromWeaponItems(List<Item> weaponWithMods)
     {
@@ -83,17 +85,17 @@ public class WeaponGenerator(
 
     string GetCaliberByTemplateId(string tpl)
     {
-        return GetTemplateById(tpl).Properties.AmmoCaliber;
+        return GetTemplateById(tpl).Properties!.AmmoCaliber!;
     }
 
-    private TemplateItem GetTemplateById(string tpl)
+    TemplateItem GetTemplateById(string tpl)
     {
-        return itemHelper.GetItem(tpl).Value;
+        return itemHelper.GetItem(tpl).Value!;
     }
 
     string GetWeaponClassByTemplateId(string tpl)
     {
-        return GetTemplateById(tpl).Properties.WeapClass;
+        return GetTemplateById(tpl).Properties!.WeapClass!;
     }
 
     EquipmentSlots GetWeaponSlotByWeaponClass(string weaponClass)
@@ -107,12 +109,12 @@ public class WeaponGenerator(
         }
     }
 
-    public Item GetWeaponMagazine(List<Item> weaponWithMods)
+    Item GetWeaponMagazine(List<Item> weaponWithMods)
     {
         return weaponWithMods.Find(item => item.SlotId == "mod_magazine")!;
     }
 
-    public void AddCartridgeToChamber(
+    void AddCartridgeToChamber(
         List<Item> weaponWithMods,
         string ammoTpl,
         TemplateItem weaponTemplate)
@@ -147,15 +149,15 @@ public class WeaponGenerator(
             }
             else
             {
-                for (int chamberNum = 0; chamberNum < chambersAmount; chamberNum++)
+                for (var chamberNum = 0; chamberNum < chambersAmount; chamberNum++)
                 {
-                    var SlotIdName = $"{chamberName}_00{chamberNum}";
+                    var slotIdName = $"{chamberName}_00{chamberNum}";
                     weaponWithMods.Add(new Item
                     {
                         Id = new MongoId(),
                         Template = ammoTpl,
                         ParentId = weaponWithMods[0].Id,
-                        SlotId = SlotIdName,
+                        SlotId = slotIdName,
                         Upd = new Upd { StackObjectsCount = 1 }
                     });
                 }
@@ -185,7 +187,7 @@ public class WeaponGenerator(
     string FillMagazine(List<Item> weaponWithMods, string ammoTpl)
     {
         weaponWithMods
-            .Where(x => x.SlotId == magazineSlotId)
+            .Where(x => x.SlotId == MAGAZINE_SLOT_ID)
             .ToList()
             .ForEach(magazine =>
             {
@@ -232,7 +234,7 @@ public class WeaponGenerator(
         SetTacticalDeviceMode(weaponWithMods);
     }
 
-    public void ReplaceTacticalDevice(List<Item> weaponWithMods)
+    void ReplaceTacticalDevice(List<Item> weaponWithMods)
     {
         foreach (var item in weaponWithMods)
         {
@@ -245,7 +247,7 @@ public class WeaponGenerator(
         }
     }
 
-    public void SetTacticalDeviceMode(List<Item> weaponWithMods)
+    void SetTacticalDeviceMode(List<Item> weaponWithMods)
     {
         foreach (var item in weaponWithMods)
         {
@@ -268,48 +270,51 @@ public class WeaponGenerator(
         var deleteMagpulRubberButtpad = false;
         var deleteSigSauerMuzzleParts = false;
         var deleteLantacBmdPart = false;
+        var deleteAkZenitPt3KlassikaStock = false;
 
-        for (int i = 0; i < weapon.Count; i++)
+        foreach (var item in weapon)
         {
-            var item = weapon[i];
             var alternativeTpl = data.GetAlternativeModule(botLevel, item.Template);
-            if (alternativeTpl != item.Template)
+            
+            if (alternativeTpl == item.Template) continue;
+            
+            if (weaponTpl == MK47 ||
+                alternativeTpl == X_47_DRUM) continue;
+            
+            if (
+                item.SlotId == "mod_muzzle" &&
+                item.Template == SIG_SAUER_TAPER_LOK_762X51_300_BLK_MUZZLE_ADAPTER)
             {
-                if (
-                    weaponTpl != MK47 &&
-                    alternativeTpl != X_47_DRUM)
-                {
-                    if (
-                        item.SlotId == "mod_muzzle" &&
-                        item.Template == SIG_SAUER_TAPER_LOK_762X51_300_BLK_MUZZLE_ADAPTER)
-                    {
-                        deleteSigSauerMuzzleParts = true;
-                    }
+                deleteSigSauerMuzzleParts = true;
+            }
 
-                    if (
-                        item.SlotId == "mod_muzzle" &&
-                        item.Template == LANTAC_BMD_BLAST_MITIGATION_DEVICE_A3_DIRECT_THREAD_ADAPTER)
-                    {
-                        deleteLantacBmdPart = true;
-                    }
+            if (
+                item.SlotId == "mod_muzzle" &&
+                item.Template == LANTAC_BMD_BLAST_MITIGATION_DEVICE_A3_DIRECT_THREAD_ADAPTER)
+            {
+                deleteLantacBmdPart = true;
+            }
 
-                    if (item.Template == MAGPUL_MOE_CARBINE_RUBBER_BUTTPAD)
-                    {
-                        deleteMagpulRubberButtpad = true;
-                    }
+            if (item.Template == MAGPUL_MOE_CARBINE_RUBBER_BUTTPAD)
+            {
+                deleteMagpulRubberButtpad = true;
+            }
+            
+            item.Template = alternativeTpl;
 
-                    item.Template = alternativeTpl;
+            if (item.SlotId == "mod_muzzle")
+            {
+                AlternateOrAddSuppressor(weapon, item);
+            }
 
-                    if (item.SlotId == "mod_muzzle")
-                    {
-                        AlternateOrAddSuppressor(weapon, item);
-                    }
-
-                    if (item.SlotId == "mod_scope")
-                    {
-                        AlternateScope(weapon, item);
-                    }
-                }
+            if (item.SlotId == "mod_scope")
+            {
+                AlternateScope(weapon, item);
+            }
+            
+            if (alternativeTpl == AK_EVO_STOCK)
+            {
+                deleteAkZenitPt3KlassikaStock = true;
             }
         }
 
@@ -328,6 +333,11 @@ public class WeaponGenerator(
         {
             DeleteModule(weapon, AR_10_LANTAC_DRAGON_762X51_MUZZLE_BRAKE_COMPENSATOR);
             DeleteModule(weapon, LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE);
+        }
+
+        if (deleteAkZenitPt3KlassikaStock)
+        {
+            DeleteModule(weapon, AK_ZENIT_PT_3_KLASSIKA_STOCK);
         }
     }
 
@@ -367,76 +377,73 @@ public class WeaponGenerator(
 
     public void AlternateOrAddSuppressor(List<Item> weapon, Item muzzleItem)
     {
-        var suppressor = weapon.Find(i => i.ParentId == muzzleItem.Id && i.SlotId == "mod_muzzle");
+        var suppressor = weapon.Find(i => i.ParentId! == muzzleItem.Id && i.SlotId == "mod_muzzle");
 
         if (suppressor != null)
         {
-            string alternativeSuppressorTpl = MuzzlePairs[muzzleItem.Template];
-            if (alternativeSuppressorTpl != null)
+            var alternativeSuppressorTpl = MuzzlePairs[muzzleItem.Template];
+            
+            if (
+                alternativeSuppressorTpl ==
+                SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR)
             {
-                if (
-                    alternativeSuppressorTpl ==
-                    SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR)
+                suppressor.SlotId = "mod_muzzle_001";
+                weapon.Add(new Item
                 {
-                    suppressor.SlotId = "mod_muzzle_001";
-                    weapon.Add(new Item
-                    {
-                        Id = new MongoId(),
-                        Template = SIG_SAUER_TWO_PORT_BRAKE_762X51_MUZZLE_BRAKE,
-                        ParentId = muzzleItem.Id,
-                        SlotId = "mod_muzzle_000"
-                    });
-                }
-                else if (
-                    alternativeSuppressorTpl ==
-                    LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE)
-                {
-                    suppressor.SlotId = "mod_muzzle_001";
-                    weapon.Add(new Item
-                    {
-                        Id = new MongoId(),
-                        Template = AR_10_LANTAC_DRAGON_762X51_MUZZLE_BRAKE_COMPENSATOR,
-                        ParentId = muzzleItem.Id,
-                        SlotId = "mod_muzzle_000"
-                    });
-                }
-
-                suppressor.Template = MuzzlePairs[muzzleItem.Template];
+                    Id = new MongoId(),
+                    Template = SIG_SAUER_TWO_PORT_BRAKE_762X51_MUZZLE_BRAKE,
+                    ParentId = muzzleItem.Id,
+                    SlotId = "mod_muzzle_000"
+                });
             }
+            else if (
+                alternativeSuppressorTpl ==
+                LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE)
+            {
+                suppressor.SlotId = "mod_muzzle_001";
+                weapon.Add(new Item
+                {
+                    Id = new MongoId(),
+                    Template = AR_10_LANTAC_DRAGON_762X51_MUZZLE_BRAKE_COMPENSATOR,
+                    ParentId = muzzleItem.Id,
+                    SlotId = "mod_muzzle_000"
+                });
+            }
+
+            suppressor.Template = MuzzlePairs[muzzleItem.Template];
         }
         else
         {
-            if (MuzzlePairs.ContainsKey(muzzleItem.Template))
+            if (!MuzzlePairs.ContainsKey(muzzleItem.Template)) return;
+            
+            var alternativeSuppressorTpl = MuzzlePairs[muzzleItem.Template];
+            if (
+                alternativeSuppressorTpl ==
+                SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR)
             {
-                var alternativeSuppressorTpl = MuzzlePairs[muzzleItem.Template];
-                if (
-                    alternativeSuppressorTpl ==
-                    SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR)
+                ConstructSigSauerSuppressor(weapon, muzzleItem);
+            }
+            else if (
+                alternativeSuppressorTpl ==
+                LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE)
+            {
+                ConstructLantacBmd(weapon, muzzleItem);
+            }
+            else
+            {
+                var suppressorItem = new Item
                 {
-                    ConstructSigSauerSuppressor(weapon, muzzleItem);
-                }
-                else if (
-                    alternativeSuppressorTpl ==
-                    LANTAC_BMD_762X51_BLAST_MITIGATION_DEVICE)
-                {
-                    ConstructLantacBmd(weapon, muzzleItem);
-                }
-                else
-                {
-                    Item suppressorItem = new Item
-                    {
-                        Id = new MongoId(),
-                        Template = alternativeSuppressorTpl,
-                        ParentId = muzzleItem.Id,
-                        SlotId = "mod_muzzle"
-                    };
-                    weapon.Add(suppressorItem);
-                }
+                    Id = new MongoId(),
+                    Template = alternativeSuppressorTpl,
+                    ParentId = muzzleItem.Id,
+                    SlotId = "mod_muzzle"
+                };
+                weapon.Add(suppressorItem);
             }
         }
     }
 
-    public void DeleteModule(List<Item> weapon, string tpl)
+    void DeleteModule(List<Item> weapon, string tpl)
     {
         var i = weapon.FindIndex(item => item.Template == tpl);
         if (i > -1)
@@ -447,7 +454,7 @@ public class WeaponGenerator(
 
     void ConstructSigSauerSuppressor(List<Item> weapon, Item muzzleItem)
     {
-        Item muzzleBrakeItem = new Item
+        var muzzleBrakeItem = new Item
         {
             Id = new MongoId(),
             Template = SIG_SAUER_TWO_PORT_BRAKE_762X51_MUZZLE_BRAKE,
@@ -456,7 +463,7 @@ public class WeaponGenerator(
         };
         weapon.Add(muzzleBrakeItem);
 
-        Item suppressorItem = new Item
+        var suppressorItem = new Item
         {
             Id = new MongoId(),
             Template = SIG_SAUER_SRD762_QD_762X51_SOUND_SUPPRESSOR,
@@ -487,7 +494,7 @@ public class WeaponGenerator(
         weapon.Add(suppressorItem);
     }
 
-    public void AddRandomEnhancement(List<Item> weapon)
+    void AddRandomEnhancement(List<Item> weapon)
     {
         if (randomUtil.GetChance100(_pmcConfig.WeaponHasEnhancementChancePercent))
         {
@@ -495,9 +502,9 @@ public class WeaponGenerator(
         }
     }
 
-    int GetChambersAmountFromWeaponTemplate(TemplateItem weaponTemplate)
+    static int GetChambersAmountFromWeaponTemplate(TemplateItem weaponTemplate)
     {
-        return weaponTemplate.Properties.Chambers.Count();
+        return weaponTemplate.Properties!.Chambers!.Count();
     }
 
     public GeneratedWeapon GenerateWeapon(

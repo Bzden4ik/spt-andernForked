@@ -1,5 +1,4 @@
 using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Logging;
 using SPTarkov.Server.Core.Models.Spt.Config;
 using SPTarkov.Server.Core.Models.Utils;
@@ -16,34 +15,16 @@ public class SeasonRandomizer(
     ModData modData
 )
 {
-    private static Season[] Seasons =
-    [
-        Season.WINTER,
-        Season.SPRING_EARLY,
-        Season.SPRING,
-        Season.SUMMER,
-        Season.AUTUMN,
-        Season.AUTUMN_LATE,
-        Season.STORM
-    ];
-
     private readonly ModConfig _modConfig = modData.ModConfig;
     private readonly WeatherConfig _weatherConfig = configServer.GetConfig<WeatherConfig>();
 
     public void RandimizeSeason()
     {
-        if (!_modConfig.RandomizeSeason) return;
-
-        _weatherConfig.OverrideSeason = GetRandomSeason();
+        _weatherConfig.OverrideSeason = randomUtil.GetArrayValue(_modConfig.RandomizeSeason);
 
         if (_modConfig.Debug)
         {
             logger.LogWithColor($"[Andern] Next raid season is: {_weatherConfig.OverrideSeason.ToString()}", LogTextColor.Blue);
         }
-    }
-
-    private Season GetRandomSeason()
-    {
-        return randomUtil.GetArrayValue(Seasons);
     }
 }

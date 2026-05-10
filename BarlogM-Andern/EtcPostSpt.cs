@@ -33,7 +33,7 @@ public class EtcPostSpt(
 
         if (_modConfig.PlayerScavAlwaysHasBackpack)
         {
-            playerScavAlwaysHasBackpack();
+            PlayerScavAlwaysHasBackpack();
         }
 
         if (_modConfig.EmissaryPmcBotsDisable)
@@ -68,13 +68,13 @@ public class EtcPostSpt(
         return Task.CompletedTask;
     }
 
-    private void PmcBackpackWeaponDisable()
+    void PmcBackpackWeaponDisable()
     {
         _pmcConfig.LooseWeaponInBackpackChancePercent = 0;
         _pmcConfig.LooseWeaponInBackpackLootMinMax = new MinMax<int>(0, 0);
     }
 
-    private void InsuranceReturnNothing()
+    void InsuranceReturnNothing()
     {
         foreach (var traderId in _insuranceConfig.ReturnChancePercent.Keys)
         {
@@ -82,7 +82,7 @@ public class EtcPostSpt(
         }
     }
 
-    private void InsuranceTune()
+    void InsuranceTune()
     {
         var prapor = databaseService.GetTrader(Traders.PRAPOR);
         var therapist = databaseService.GetTrader(Traders.THERAPIST);
@@ -103,19 +103,19 @@ public class EtcPostSpt(
         }
     }
 
-    private void SetMinFleaLevel()
+    void SetMinFleaLevel()
     {
         databaseService.GetGlobals().Configuration.RagFair.MinUserLevel =
             modData.ModConfig.FleaMinUserLevel;
     }
 
-    private void InsuranceOnLab()
+    void InsuranceOnLab()
     {
         var lab = databaseService.GetLocation("laboratory");
         lab.Base.Insurance = true;
     }
 
-    private void EmissaryPmcBotsDisable()
+    void EmissaryPmcBotsDisable()
     {
         foreach (var memberCategory in _pmcConfig.AccountTypeWeight.Keys)
         {
@@ -125,7 +125,7 @@ public class EtcPostSpt(
         _pmcConfig.AccountTypeWeight[MemberCategory.Default] = 25;
     }
 
-    private void playerScavAlwaysHasBackpack()
+    void PlayerScavAlwaysHasBackpack()
     {
         foreach (var keyValuePair in _playerScavConfig.KarmaLevel)
         {
@@ -133,7 +133,7 @@ public class EtcPostSpt(
         }
     }
 
-    private void CheeseQuests()
+    void CheeseQuests()
     {
         var shotySilencer = "5b363dd25acfc4001a598fd2";
 
@@ -215,6 +215,7 @@ public class EtcPostSpt(
                                 $"[Andern] quest '{quest.QuestName}' weapon condition removed",
                                 LogTextColor.Blue);
                         }
+
                         continue;
                     }
 
@@ -230,12 +231,14 @@ public class EtcPostSpt(
                                 $"[Andern] quest '{quest.QuestName}' weapon condition removed",
                                 LogTextColor.Blue);
                         }
+
                         continue;
                     }
 
                     // if quest required UZI
                     if (conditionCounter.Weapon.Contains("6680304edadb7aa61d00cef0"))
                     {
+                        conditionCounter.Weapon = null;
                         conditionCounter.WeaponModsInclusive = null;
 
                         if (_modConfig.Debug)
@@ -255,9 +258,7 @@ public class EtcPostSpt(
         }
     }
 
-
-    private static readonly HashSet<string> AllDmr =
-    [
+   static readonly HashSet<string> ALL_DMR = [
         "6176aca650224f204c1da3fb",
         "5df8ce05b11454561e39243b",
         "5a367e5dc4a282000e49738f",
@@ -270,11 +271,10 @@ public class EtcPostSpt(
 
     void AddAllDmr(QuestConditionCounterCondition conditionCounter)
     {
-        conditionCounter.Weapon!.UnionWith(AllDmr);
+        conditionCounter.Weapon!.UnionWith(ALL_DMR);
     }
 
-    private static readonly List<List<string>> AllSilencers =
-    [
+    static readonly List<List<string>> ALL_SILENCERS = [
         ["59bffc1f86f77435b128b872"],
         ["5a32a064c4a28200741e22de"],
         ["59bffbb386f77435b379b9c2"],
@@ -358,11 +358,10 @@ public class EtcPostSpt(
         QuestConditionCounterCondition conditionCounter)
     {
         conditionCounter.Weapon = null;
-        conditionCounter.WeaponModsInclusive = AllSilencers;
+        conditionCounter.WeaponModsInclusive = ALL_SILENCERS;
     }
 
-    private static readonly List<List<string>> BoltyAndDMRSilencers =
-    [
+    static readonly List<List<string>> BOLTY_AND_DMR_SILENCERS = [
         ["5b86a0e586f7745b600ccb23"],
         ["59bffbb386f77435b379b9c2"],
         ["593d489686f7745c6255d58a"],
@@ -398,6 +397,6 @@ public class EtcPostSpt(
     void ReplaceWithBoltyAndDMRSilencers(
         QuestConditionCounterCondition conditionCounter)
     {
-        conditionCounter.WeaponModsInclusive = BoltyAndDMRSilencers;
+        conditionCounter.WeaponModsInclusive = BOLTY_AND_DMR_SILENCERS;
     }
 }

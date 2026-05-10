@@ -27,12 +27,22 @@
     "InsuranceDecreaseReturnTime": true,
     "InsuranceIncreaseStorageTime": true,
     "FleaBlacklistDisable": false,
-    "RandomizeSeason": true,
+    "RandomizeSeason": [
+        "WINTER",
+        "SPRING_EARLY",
+        "SPRING",
+        "SUMMER",
+        "AUTUMN",
+        "AUTUMN_LATE",
+        "STORM"
+    ],
     "PlayerScavAlwaysHasBackpack": true,
     "GpCoinsOnPmcAndScavs": true,
     "LegaMedalOnBosses": true,
     "RemoveAllTradersItemsFromFlea": false,
     "WeeklyBossEventDisable": false,
     "CheeseQuests": false,
+    "CheesePrestige": false,
+    "ScavCaseLootValueMultiplier": 6,
     "Debug": false
 }

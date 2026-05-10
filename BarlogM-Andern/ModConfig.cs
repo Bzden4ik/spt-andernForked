@@ -1,3 +1,5 @@
+using SPTarkov.Server.Core.Models.Enums;
+
 namespace BarlogM_Andern;
 
 public class ModConfig
@@ -30,12 +32,14 @@ public class ModConfig
     public bool InsuranceDecreaseReturnTime { get; set; }
     public bool InsuranceIncreaseStorageTime { get; set; }
     public bool FleaBlacklistDisable { get; set; }
-    public bool RandomizeSeason { get; set; }
+    public Season[] RandomizeSeason { get; set; }
     public bool PlayerScavAlwaysHasBackpack { get; set; }
     public bool GpCoinsOnPmcAndScavs { get; set; }
     public bool LegaMedalOnBosses { get; set; }
     public bool RemoveAllTradersItemsFromFlea { get; set; }
     public bool WeeklyBossEventDisable { get; set; }
     public bool CheeseQuests { get; set; }
+    public bool CheesePrestige { get; set; }
+    public int ScavCaseLootValueMultiplier { get; set; }
     public bool Debug { get; set; }
 }

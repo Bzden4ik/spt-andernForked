@@ -65,8 +65,7 @@ public class HelmetGenerator(
 
     const string PNV_10T_DOVETAIL_ADAPTER = "5c0695860db834001b735461";
 
-    static readonly FrozenSet<string> HeadphonesIncompatibleHelmets =
-    [
+    private static readonly FrozenSet<string> HEADPHONES_INCOMPATIBLE_HELMETS = [
         ALTYN_HELMET,
         RYS_HELMET,
         MASKA_OLIVE_HELMET,
@@ -75,8 +74,7 @@ public class HelmetGenerator(
         LSHZ_2DTM_HELMET
     ];
 
-    static readonly FrozenSet<string> HeadphonesNotFullyCompatibleHelmets =
-    [
+    static readonly FrozenSet<string> HEADPHONES_NOT_FULLY_COMPATIBLE_HELMETS = [
         AIRFRAME_HELMET,
         LSHZ_LIGHT_HELMET,
         EXFIL_BLACK_HELMET,
@@ -86,8 +84,7 @@ public class HelmetGenerator(
     ];
 
 
-    static readonly FrozenSet<string> TierTwoNightHelmets =
-    [
+    static readonly FrozenSet<string> TIER_TWO_NIGHT_HELMETS = [
         _6B47_RATNIK_BSH_HELMET,
         TC_2001_HELMET,
         TC_2002_HELMET,
@@ -97,8 +94,7 @@ public class HelmetGenerator(
         HJELM_HELMET
     ];
 
-    static readonly FrozenSet<string> TierThreeNightHelmets =
-    [
+    static readonly FrozenSet<string> TIER_THREE_NIGHT_HELMETS = [
         CAIMAN_HYBRID_HELMET,
         TC800_HELMET,
         BASTION_HELMET,
@@ -106,8 +102,7 @@ public class HelmetGenerator(
         TC_2002_HELMET
     ];
 
-    static readonly FrozenSet<string> TierFourNightHelmets =
-    [
+    static readonly FrozenSet<string> TIER_FOUR_NIGHT_HELMETS = [
         AIRFRAME_HELMET,
         EXFIL_BLACK_HELMET,
         EXFIL_BROWN_HELMET,
@@ -210,7 +205,7 @@ public class HelmetGenerator(
         }
     }
 
-    private void AnyOtherHelmet(
+    void AnyOtherHelmet(
         string tpl,
         int botLevel,
         string botRole,
@@ -223,7 +218,7 @@ public class HelmetGenerator(
             tpl);
     }
 
-    private void AltynHelmet(
+    void AltynHelmet(
         int botLevel,
         string botRole,
         BotBaseInventory botInventory)
@@ -244,7 +239,7 @@ public class HelmetGenerator(
             helmetItem.Id);
     }
 
-    private void RysHelmet(
+    void RysHelmet(
         int botLevel,
         string botRole,
         BotBaseInventory botInventory)
@@ -265,7 +260,7 @@ public class HelmetGenerator(
             helmetItem.Id);
     }
 
-    private void MaskaHelmet(
+    void MaskaHelmet(
         string helmetTpl,
         int botLevel,
         string botRole,
@@ -292,7 +287,7 @@ public class HelmetGenerator(
             helmetItem.Id);
     }
 
-    private void VulkanHelmet(
+    void VulkanHelmet(
         int botLevel,
         string botRole,
         BotBaseInventory botInventory)
@@ -313,7 +308,7 @@ public class HelmetGenerator(
             helmetItem.Id);
     }
 
-    private void Lshz2dtmHelmet(
+    void Lshz2dtmHelmet(
         int botLevel,
         string botRole,
         BotBaseInventory botInventory,
@@ -389,7 +384,7 @@ public class HelmetGenerator(
                 helmetItem.Id);
     }
 
-    private void CaimanHybridHelmet(
+    void CaimanHybridHelmet(
         int botLevel,
         string botRole,
         BotBaseInventory botInventory,
@@ -436,7 +431,7 @@ public class HelmetGenerator(
         }
     }
 
-    private void RatnikBshHelmet(
+    void RatnikBshHelmet(
         string helmetTpl,
         int botLevel,
         string botRole,
@@ -806,17 +801,17 @@ public class HelmetGenerator(
 
     private string TierTwoNightHelmet()
     {
-        return randomUtil.GetArrayValue(TierTwoNightHelmets);
+        return randomUtil.GetArrayValue(TIER_TWO_NIGHT_HELMETS);
     }
 
     private string TierThreeNightHelmet()
     {
-        return randomUtil.GetArrayValue(TierThreeNightHelmets);
+        return randomUtil.GetArrayValue(TIER_THREE_NIGHT_HELMETS);
     }
 
     private string TierFourNightHelmet()
     {
-        return randomUtil.GetArrayValue(TierFourNightHelmets);
+        return randomUtil.GetArrayValue(TIER_FOUR_NIGHT_HELMETS);
     }
 
     private string SelectNightHelmet(int botLevel)
@@ -831,8 +826,8 @@ public class HelmetGenerator(
     }
 
     public bool IsEarpieceIncompatible(MongoId helmetTpl) =>
-        HeadphonesIncompatibleHelmets.Contains(helmetTpl);
+        HEADPHONES_INCOMPATIBLE_HELMETS.Contains(helmetTpl);
 
     public bool IsEarpieceNotFullyCompatible(MongoId helmetTpl) =>
-        HeadphonesNotFullyCompatibleHelmets.Contains(helmetTpl);
+        HEADPHONES_NOT_FULLY_COMPATIBLE_HELMETS.Contains(helmetTpl);
 }
