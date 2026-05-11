@@ -42,7 +42,7 @@
     "RemoveAllTradersItemsFromFlea": false,
     "WeeklyBossEventDisable": false,
     "CheeseQuests": false,
-    "CheesePrestige": false,
-    "ScavCaseLootValueMultiplier": 6,
+    "ScavCaseLootValueMultiplier": 5,
+    "ReducePenaltiesFromLargeMagazines": false,
     "Debug": false
 }

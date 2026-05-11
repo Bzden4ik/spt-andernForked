@@ -39,7 +39,7 @@ public class ModConfig
     public bool RemoveAllTradersItemsFromFlea { get; set; }
     public bool WeeklyBossEventDisable { get; set; }
     public bool CheeseQuests { get; set; }
-    public bool CheesePrestige { get; set; }
     public int ScavCaseLootValueMultiplier { get; set; }
+    public bool ReducePenaltiesFromLargeMagazines { get; set; }
     public bool Debug { get; set; }
 }

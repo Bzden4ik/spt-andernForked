@@ -272,8 +272,9 @@ public class WeaponGenerator(
         var deleteLantacBmdPart = false;
         var deleteAkZenitPt3KlassikaStock = false;
 
-        foreach (var item in weapon)
+        for (int i = 0; i < weapon.Count; i++)
         {
+            var item = weapon[i];
             var alternativeTpl = data.GetAlternativeModule(botLevel, item.Template);
             
             if (alternativeTpl == item.Template) continue;
@@ -300,6 +301,11 @@ public class WeaponGenerator(
                 deleteMagpulRubberButtpad = true;
             }
             
+            if (alternativeTpl == AK_EVO_STOCK)
+            {
+                deleteAkZenitPt3KlassikaStock = true;
+            }
+            
             item.Template = alternativeTpl;
 
             if (item.SlotId == "mod_muzzle")
@@ -310,11 +316,6 @@ public class WeaponGenerator(
             if (item.SlotId == "mod_scope")
             {
                 AlternateScope(weapon, item);
-            }
-            
-            if (alternativeTpl == AK_EVO_STOCK)
-            {
-                deleteAkZenitPt3KlassikaStock = true;
             }
         }
 
