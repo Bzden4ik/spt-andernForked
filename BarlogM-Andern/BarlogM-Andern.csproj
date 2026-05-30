@@ -7,22 +7,28 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <!-- Built offline against the installed 4.0.13 server assemblies (no NuGet feed needed). -->
     <ItemGroup>
-        <PackageReference Include="SPTarkov.Common" Version="4.0.13">
+        <Reference Include="SPTarkov.Server.Core">
+            <HintPath>F:\test\ZALUPA\SPT\SPTarkov.Server.Core.dll</HintPath>
             <Private>false</Private>
-            <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-        <PackageReference Include="SPTarkov.DI" Version="4.0.13">
+        </Reference>
+        <Reference Include="SPTarkov.Common">
+            <HintPath>F:\test\ZALUPA\SPT\SPTarkov.Common.dll</HintPath>
             <Private>false</Private>
-            <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-        <PackageReference Include="SPTarkov.Server.Core" Version="4.0.13">
+        </Reference>
+        <Reference Include="SPTarkov.DI">
+            <HintPath>F:\test\ZALUPA\SPT\SPTarkov.DI.dll</HintPath>
             <Private>false</Private>
-            <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-        <PackageReference Include="fastJSON5" Version="1.0.4">
+        </Reference>
+        <Reference Include="SemanticVersioning">
+            <HintPath>F:\test\ZALUPA\SPT\SemanticVersioning.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="fastJSON5">
+            <HintPath>F:\test\ZALUPA\SPT\Develop\FixMod\BarlogM-Andern\fastJSON5.dll</HintPath>
             <Private>true</Private>
-        </PackageReference>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
@@ -65,10 +71,4 @@
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     </PropertyGroup>
 
-    <Target Name="CopyFastJSON" AfterTargets="Build">
-        <ItemGroup>
-            <FastJSONFiles Include="$(NuGetPackageRoot)fastjson5\1.0.4\lib\netstandard2.1\fastJSON5.dll" />
-        </ItemGroup>
-        <Copy SourceFiles="@(FastJSONFiles)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
-    </Target>
 </Project>
